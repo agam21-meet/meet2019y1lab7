@@ -1,124 +1,247 @@
 import turtle
-import random #We'll need this later in the lab
+import random
+import time
 
-turtle.tracer(1,0) #This helps the turtle move more smoothly
-UP_EDGE = 250
-DOWN_EDGE = -250
+turtle.tracer(1,0) 
+UP_EDGE = 400
+DOWN_EDGE = -400
 RIGHT_EDGE = 400
 LEFT_EDGE = -400
 
-SIZE_X=800
-SIZE_Y=500
-turtle.setup(SIZE_X, SIZE_Y) #Curious? It's the turtle window  
-                             #size.    
+SIZE_X=1000
+SIZE_Y=1000
+turtle.setup(SIZE_X, SIZE_Y)
+
 turtle.penup()
 
 SQUARE_SIZE = 20
-START_LENGTH = 5
-TIME_STEP = 100
+START_LENGTH = 2
+TIME_STEP = 1000
 
-#Initialize lists
+
 pos_list = []
 stamp_list = []
 food_pos = []
 food_stamps = []
 
-#Set up positions (x,y) of boxes that make up the snake
+
+
+stamp2_list=[]
+pos_list2=[]
+snake2=turtle.clone()
+snake2.shape('square')
+snake2.goto(10,0)
 snake = turtle.clone()
 snake.shape("square")
-
-#Hide the turtle object (it's an arrow - we don't need to see it)
+snake.goto(-10,0)
+turtle2=turtle.Turtle()
+turtle.penup()
+turtle2.penup()
+turtle.goto(-400,-400)
+turtle.pendown()
+turtle.goto(-400,400)
+turtle.goto(400,400)
+turtle.goto(400,-400)
+turtle.goto(-400,-400)
+turtle.penup()
+turtle.goto(0,425)
+style=("courier",60,'italic')
+style3=("courier",28,'italic')
+turtle.write("Save The Earth",False,"center",style)
+style2=("courier",20,'italic')
+turtle2.goto(0,-450)
+turtle2.write("Score :0",False,"center",style2)
+turtle2.hideturtle()
+score1=[]
 turtle.hideturtle()
+
+fact=turtle.Turtle()
+fact.hideturtle()
+def facts():
+    if len(score1)==5:
+        fact.penup()
+        fact.goto(0,360)
+        fact.write("Springs are getting earlier :",False,"center",("Arial", 18, "normal"))
+        fact.goto(0,340)
+        fact.write("flowering dates advanced 7.3 days between 1936 and 1998",False,"center",("Arial", 18, "normal"))
+        time.sleep(3)
+        fact.clear()
+    elif len(score1)==10:
+        fact.penup()
+        fact.goto(0,360)
+        fact.write("At least 70 species of frogs have become extinct",False,"center",("Arial", 18, "normal"))
+        fact.goto(0,340)
+        fact.write("due to inceased temperatures",False,"center",("Arial", 18, "normal"))
+        time.sleep(3)
+        fact.clear()
+    
+    elif len(score1)==15:
+        fact.penup()
+        fact.goto(0,360)
+        fact.write("Until 2007 the USA was the biggest emitter of greenhouse gases.",False,"center",("Arial", 18, "normal"))
+        fact.goto(0,340)
+        fact.write("Now China has overtaken them",False,"center",("Arial", 18, "normal"))
+        time.sleep(3)
+        fact.clear()
+        
+    elif len(score1)==20:
+        fact.penup()
+        fact.goto(0,360)
+        fact.write("The last two decades of the 20th century ",False,"center",("Arial", 18, "normal"))
+        fact.goto(0,340)
+        fact.write("were the hottest in 400 years",False,"center",("Arial", 18, "normal"))
+        time.sleep(3)
+        fact.clear()
+        
+    elif len(score1)==25:
+        fact.penup()
+        fact.goto(0,360)
+        fact.write("Emperor penguins have dropped from 300 breeding pars ",False,"center",("Arial", 18, "normal"))
+        fact.goto(0,340)
+        fact.write(" to jast 9 in the western Antarctic peninsula",False,"center",("Arial", 18, "normal"))
+        time.sleep(3)
+        fact.clear()
+        
+    elif len(score1)==30:
+        fact.penup()
+        fact.goto(0,360)
+        fact.write("The numbe of nurricanes that develop each year has more then",False,"center",("Arial", 18, "normal"))
+        fact.goto(0,340)
+        fact.write("douled in thelast century as sea-surtace temperatures rise",False,"center",("Arial", 18, "normal"))
+        time.sleep(3)
+        fact.clear()
+        
+    elif len(score1)==35:
+        fact.penup()
+        fact.goto(0,360)
+        fact.write("Coral reefs highly sensitive to temperature changes,",False,"center",("Arial", 18, "normal"))
+        fact.goto(0,340)
+        fact.write("suffered bleach increased warmth",False,"center",("Arial", 18, "normal"))
+        fact.sleep(3)
+        fact.clear()
+        
+    elif len(score1)==40:
+        fact.penup()
+        fact.goto(0,360)
+        fact.write("Only about 8% of global energy comes ",False,"center",("Arial", 18, "normal"))
+        fact.goto(0,340)
+        fact.write("sources The remaining 92% comes from ",False,"center",("Arial", 18, "normal"))
+        fact.goto(0,380)
+        fact.write("non-venewables predominantly fossil fuels",False,"center",("Arial", 18, "normal"))
+        fact.sleep(3)
+        fact.clear()
+    elif len(score1)==45:
+        fact.penup()
+        fact.goto(0,360)
+        fact.write("The annual rate of sea level rise over the ",False,"center",("Arial", 18, "normal"))
+        fact.goto(0,340)
+        fact.write("past 20 years has been 0.13 inches a year-twice the fast than the last 80 years",False,"center",("Arial", 18, "normal"))
+        time.sleep(3)
+        fact.clear()
+    elif len(score1)==50:
+        fact.penup()
+        fact.goto(0,360)
+        fact.write("The world health organizantion arlready attributes",False,"center",("Arial", 18, "normal"))
+        fact.goto(0,340)
+        fact.write("150,000 deaths per year to climate change",False,"center",("Arial", 18, "normal"))
+        time.sleep(3)
+        fact.clear()
+
 def new_stamp():
-    snake_pos = snake.pos() #Get snake’s position
-    #Append the position tuple to pos_list
-    pos_list.append(snake_pos) 
-    #snake.stamp() returns a stamp ID. Save it in some variable         
-    snake_stamp = snake.stamp()
-    #append that stamp ID to stamp_list.     
+    snake_pos = snake.pos()
+    pos_list.append(snake_pos)        
+    snake_stamp = snake.stamp()     
     stamp_list.append(snake_stamp)
-#Draw a snake at the start of the game with a for loop
-#for loop should use range() and count up to the number of pieces
-#in the snake (i.e. START_LENGTH)
+
+
 for i in range(START_LENGTH) :
-    x_pos=snake.pos()[0] #Get x-position with snake.pos()[0]
+    x_pos=snake.pos()[0]
     y_pos=snake.pos()[1]
 
-    #Add SQUARE_SIZE to x_pos. Where does x_pos point to now?    
-    # You're RIGHT!
+    
     x_pos+=SQUARE_SIZE 
 
-    snake.goto(x_pos,y_pos) #Move snake to new (x,y)
+    snake.goto(x_pos,y_pos) 
        
-    #Now draw the new snake part on the screen (hint, you have a 
-    #function to do this
+    
     new_stamp()
 def remove_tail():
-    old_stamp = stamp_list.pop(0) # last piece of tail
-    snake.clearstamp(old_stamp) # erase last piece of tail
-    pos_list.pop(0) # remove last piece of tail's position
+    old_stamp = stamp_list.pop(0) 
+    snake.clearstamp(old_stamp) 
+    pos_list.pop(0) 
 
 snake.direction="Up"
 def up():
-    snake.direction="Up" #Change direction to up
-    #Update the snake drawing 
-    print("You pressed the up key!")
+    if snake.direction!="Down":
+        snake.direction="Up" 
 def down():
-    snake.direction="Down" #Change direction to up
-    #Update the snake drawing 
-    print("You pressed the down key!")
+    if snake.direction!="Up":
+        snake.direction="Down" 
 def right():
-    snake.direction="Right" #Change direction to up
-    #Update the snake drawing 
-    print("You pressed the right key!")
+    if snake.direction!="Left":
+        snake.direction="Right"
+    
 def left():
-    snake.direction="Left" #Change direction to up
-    #Update the snake drawing 
-    print("You pressed the left key!")
-#2. Make functions down(), left(), and right() that change snake.direction
-####WRITE YOUR CODE HERE!!
+    if snake.direction!="Right":
+        snake.direction="Left"
+
+
 turtle.onkeypress(up,"Up")
-turtle.onkeypress(down, "Down") # Create listener for up key
+turtle.onkeypress(down, "Down")
 turtle.onkeypress(right,"Right")
 turtle.onkeypress(left,"Left")
-#3. Do the same for the other arrow keys
-####WRITE YOUR CODE HERE!!
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 turtle.listen()
-turtle.register_shape("trash.gif") #Add trash picture
-                      # Make sure you have downloaded this shape 
-                      # from the Google Drive folder and saved it
-                      # in the same folder as this Python script
+turtle.register_shape("trash.gif")
+turtle.register_shape("Lose.gif")
 
 food = turtle.clone()
-food.shape("trash.gif") 
+food.shape("trash.gif")
 
-#Locations of food
+
 food_pos = [(100,100), (-100,100), (-100,-100), (100,-100)]
 food_stamps = []
 food.hideturtle()
 
-# Write code that:
-#1. moves the food turtle to each food position
-#2. stamps the food turtle at that location
-#3. saves the stamp by appending it to the food_stamps list using
-# food_stamps.append(    )
-#4. Don't forget to hide the food turtle!
 
 for this_food_pos in food_pos :
     food.goto(this_food_pos)
     food_stamp=food.stamp()
     food_stamps.append(food_stamp)
+
+
 def make_food():
-    #The screen positions go from -SIZE/2 to +SIZE/2
-    #But we need to make food pieces only appear on game squares
-    #So we cut up the game board into multiples of SQUARE_SIZE.
-    min_x=-int(SIZE_X/2/SQUARE_SIZE)+1
-    max_x=int(SIZE_X/2/SQUARE_SIZE)-1
-    min_y=-int(SIZE_Y/2/SQUARE_SIZE)+1
-    max_y=int(SIZE_Y/2/SQUARE_SIZE)-1
-    
-    #Pick a position that is a random multiple of SQUARE_SIZE
+    min_x=-int(SIZE_X/3/SQUARE_SIZE)+2
+    max_x=int(SIZE_X/3/SQUARE_SIZE)-2
+    min_y=-int(SIZE_Y/3/SQUARE_SIZE)+2
+    max_y=int(SIZE_Y/3/SQUARE_SIZE)-2
     food_x = random.randint(min_x,max_x)*SQUARE_SIZE
     food_y = random.randint(min_y,max_y)*SQUARE_SIZE
     food_random=(food_x,food_y)
@@ -127,78 +250,309 @@ def make_food():
     food_randoms=food.stamp()
     food_stamps.append(food_randoms)
 
-##1.WRITE YOUR CODE HERE: Make the food turtle go to the randomly-generated
-    #position 
-##2.WRITE YOUR CODE HERE: Add the food turtle's position to the food positions list
-##3.WRITE YOUR CODE HERE: Add the food turtle's stamp to the food stamps list
+def new_stamp2():
+    snake2_pos = snake2.pos()
+    pos_list2.append(snake2_pos)        
+    snake2_stamp = snake2.stamp()
+    print(snake2_stamp)
+    stamp2_list.append(snake2_stamp)
+    print(stamp2_list)
+
+for i in range(START_LENGTH) :
+    x_pos2=snake2.pos()[0]
+    y_pos2=snake2.pos()[1]
+
+    
+    x_pos2+=SQUARE_SIZE 
+
+    snake2.goto(x_pos2,y_pos2) 
+       
+    
+    new_stamp2()
+def remove_tail2():
+    print(pos_list2)
+    old2_stamp = stamp2_list.pop(0) 
+    snake2.clearstamp(old2_stamp) 
+    pos_list2.pop(0) 
+
+snake2.direction="Up2"
+def up2():
+    if snake2.direction!="Down2":
+        snake2.direction="Up2" 
+def down2():
+    if snake2.direction!="Up2":
+        snake2.direction="Down2" 
+def right2():
+    if snake2.direction!="Left2":
+        snake2.direction="Right2"
+    
+def left2():
+    if snake2.direction!="Right2":
+        snake2.direction="Left2"
+
+
+turtle.onkeypress(up2,"w")
+turtle.onkeypress(down2, "s")
+turtle.onkeypress(right2,"d")
+turtle.onkeypress(left2,"a")
+
+def move_snake2():
+    global TIME_STEP
+    my_pos2 = snake2.pos()
+    x_pos2 = my_pos2[0]
+    y_pos2 = my_pos2[1]
+    #eats the food
+    if snake2.pos() in food_pos:
+        food_index=food_pos.index(snake2.pos()) 
+        food.clearstamp(food_stamps[food_index]) 
+        food_pos.pop(food_index) 
+        food_stamps.pop(food_index)
+        score1.append(1)
+        turtle2.clear()
+        randomNumber = random.randint(0,5)
+        myColorList = ["red","green","black","purple","blue","yellow"]
+        new_color=myColorList[randomNumber]
+        snake2.color(new_color)
+        turtle2.write("Score :"+str(len(score1)),False,'center',style2)
+        if TIME_STEP>=1:
+            TIME_STEP-=1
+        facts()
+    
+    new_pos2 = snake2.pos()
+    new_x_pos2 = new_pos2[0]
+    new_y_pos2 = new_pos2[1]
+    if snake2.direction == "Up":
+            snake2.goto(x_pos2, y_pos2 + SQUARE_SIZE)
+    elif snake2.direction=="Down":
+            snake2.goto(x_pos2, y_pos2 - SQUARE_SIZE)
+
+    elif snake2.direction=="Left":
+            snake.goto(x_pos2-SQUARE_SIZE,y_pos2)
+    elif snake.direction=="Right":
+             snake.goto(x_pos2+SQUARE_SIZE,y_pos2)
+
+    
+    if new_x_pos2 >= RIGHT_EDGE:
+        print(len(pos_list))
+        print("You hit the right edge! Game over!")
+        turtle2.clear()
+        turtle.showturtle()
+        turtle.goto(0,0)
+        turtle.shape("Lose.gif")
+        turtle2.goto(0,200)
+        print('ewjkfgsakfsjfgsjagfkjaseggsfsefghsefjsgaejfgjsefgsfdkshfmsefhjsfjhdbsf')
+        turtle2.write("You have let world be consumed by polution",False,"center",style3)
+        quit()
+    elif new_x_pos2<=LEFT_EDGE:
+        print(len(pos_list))
+        print("You hit the left edge! Game over!")
+        turtle2.clear()
+        turtle.showturtle()
+        turtle.goto(0,0)
+        turtle.shape("Lose.gif")
+        turtle2.goto(0,200)
+        print('123456789')
+        turtle2.write("You have let world be consumed by polution",False,"center",style3)
+        quit()
+    elif new_y_pos2>=UP_EDGE:
+        print(len(pos_list))
+        print("You hit the left edge! Game over!")
+        turtle2.clear()
+        turtle.showturtle()
+        turtle.goto(0,0)
+        turtle.shape("Lose.gif")
+        turtle2.goto(0,200)
+        print(')()()()()()(')
+        turtle2.write("You have let world be consumed by polution",False,"center",style3)
+        quit()
+    elif new_y_pos2<=DOWN_EDGE:
+        print(len(pos_list))
+        turtle2.clear()
+        turtle.showturtle()
+        turtle.goto(0,0)
+        turtle.shape("Lose.gif")
+        turtle2.goto(0,200)
+        print('this')
+        turtle2.write("You have let world be consumed by polution",False,"center",style3)
+        quit()
+        print("You hit the left edge! Game over!")
+
+
+        
+    if len(food_stamps)<1 :
+                make_food()
+    if new_pos2 in pos_list2[:-1]:
+        print(len(pos_list))
+        turtle2.clear()
+        turtle.showturtle()
+        turtle.goto(0,0)
+        turtle.shape("Lose.gif")
+        turtle2.goto(0,200)
+        print('hellllloooowwww')
+        turtle2.write("You have let world be consumed by pollution",False,"center",style3)
+        quit()
+    if score1==50:
+        turtle.goto(0,0)
+        turtle.showturtle()
+        turtle.shape("earth.gif")
+        turtle2.goto(0,150)
+        turtle2.write("Congratulations you have saved the environment",False,"center",style3)
+
+    new_stamp2()
+    turtle.ontimer(move_snake2,TIME_STEP)
+    remove_tail2()
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 def move_snake():
+    global TIME_STEP
     my_pos = snake.pos()
     x_pos = my_pos[0]
     y_pos = my_pos[1]
+    #eats the food
+    if snake.pos() in food_pos:
+        food_index=food_pos.index(snake.pos()) 
+        food.clearstamp(food_stamps[food_index]) 
+        food_pos.pop(food_index) 
+        food_stamps.pop(food_index)
+        score1.append(1)
+        turtle2.clear()
+        randomNumber = random.randint(0,5)
+        myColorList = ["red","green","black","purple","blue","yellow"]
+        new_color=myColorList[randomNumber]
+        snake.color(new_color)
+        turtle2.write("Score :"+str(len(score1)),False,'center',style2)
+        if TIME_STEP>=1:
+            TIME_STEP-=1
+        facts()
+    
     new_pos = snake.pos()
     new_x_pos = new_pos[0]
     new_y_pos = new_pos[1]
-    if snake.pos() in food_pos:
-        food_index=food_pos.index(snake.pos()) #What does this do?
-        food.clearstamp(food_stamps[food_index]) #Remove eaten food stamp
-        food_pos.pop(food_index) #Remove eaten food position
-        food_stamps.pop(food_index) #Remove eaten food stamp
-        x_pos+=SQUARE_SIZE 
-
-        snake.goto(x_pos,y_pos) #Move snake to new (x,y)
-       
-    #Now draw the new snake part on the screen (hint, you have a 
-    #function to do this
-        new_stamp()
-        print("You have eaten the food!")
-    else:
-        for i in range(len(pos_list[0])):
-            if pos_list[i]==my_pos:
-                print("you have died")
-                quit()
-        
-    
-    # The next three lines check if the snake is hitting the 
-    # right edge.
-    if new_x_pos >= RIGHT_EDGE:
-        print("You hit the right edge! Game over!")
-        quit()
-    elif new_x_pos<=LEFT_EDGE:
-        print("You hit the left edge! Game over!")
-        quit()
-    elif new_y_pos>=UP_EDGE:
-        print("You hit the left edge! Game over!")
-        quit()
-    elif new_y_pos<=DOWN_EDGE:
-        quit()
-        print("You hit the left edge! Game over!")
-    #If snake.direction is up, then we want the snake to change
-    #it’s y position by SQUARE_SIZE
     if snake.direction == "Up":
-        snake.goto(x_pos, y_pos + SQUARE_SIZE)
-        print("You moved up!")
+            snake.goto(x_pos, y_pos + SQUARE_SIZE)
     elif snake.direction=="Down":
-        snake.goto(x_pos, y_pos - SQUARE_SIZE)
+            snake.goto(x_pos, y_pos - SQUARE_SIZE)
 
     elif snake.direction=="Left":
-        snake.goto(x_pos-SQUARE_SIZE,y_pos)
+            snake.goto(x_pos-SQUARE_SIZE,y_pos)
     elif snake.direction=="Right":
-        snake.goto(x_pos+SQUARE_SIZE,y_pos)
+             snake.goto(x_pos+SQUARE_SIZE,y_pos)
 
-#4. Write the conditions for RIGHT and LEFT on your own
-##### YOUR CODE HERE
-
-#Make the snake stamp a new square on the screen
-#Hint - use a single function to do this
-    new_stamp()
-    remove_tail()
-    if len(food_stamps) <= 6 :
-                make_food()
-    turtle.ontimer(move_snake,TIME_STEP)
-######## SPECIAL PLACE - Remember it for Part 5
-
-#remove the last piece of the snake (Hint Functions are FUN!)
     
-move_snake()
+    if new_x_pos >= RIGHT_EDGE:
+        print(len(pos_list))
+        print("You hit the right edge! Game over!")
+        turtle2.clear()
+        turtle.showturtle()
+        turtle.goto(0,0)
+        turtle.shape("Lose.gif")
+        turtle2.goto(0,200)
+        turtle2.write("You have let world be consumed by polution",False,"center",style3)
+        quit()
+    elif new_x_pos<=LEFT_EDGE:
+        print(len(pos_list))
+        print("You hit the left edge! Game over!")
+        turtle2.clear()
+        turtle.showturtle()
+        turtle.goto(0,0)
+        turtle.shape("Lose.gif")
+        turtle2.goto(0,200)
+        turtle2.write("You have let world be consumed by polution",False,"center",style3)
+        quit()
+    elif new_y_pos>=UP_EDGE:
+        print(len(pos_list))
+        print("You hit the left edge! Game over!")
+        turtle2.clear()
+        turtle.showturtle()
+        turtle.goto(0,0)
+        turtle.shape("Lose.gif")
+        turtle2.goto(0,200)
+        turtle2.write("You have let world be consumed by polution",False,"center",style3)
+        quit()
+    elif new_y_pos<=DOWN_EDGE:
+        print(len(pos_list))
+        turtle2.clear()
+        turtle.showturtle()
+        turtle.goto(0,0)
+        turtle.shape("Lose.gif")
+        turtle2.goto(0,200)
+        turtle2.write("You have let world be consumed by polution",False,"center",style3)
+        quit()
+        print("You hit the left edge! Game over!")
 
+
+        
+    if len(food_stamps)<1 :
+                make_food()
+    if new_pos in pos_list[:-1]:
+        print(len(pos_list))
+        turtle2.clear()
+        turtle.showturtle()
+        turtle.goto(0,0)
+        turtle.shape("Lose.gif")
+        turtle2.goto(0,200)
+        turtle2.write("You have let world be consumed by pollution",False,"center",style3)
+        quit()
+    if score1==50:
+        turtle.goto(0,0)
+        turtle.showturtle()
+        turtle.shape("earth.gif")
+        turtle2.goto(0,150)
+        turtle2.write("Congratulations you have saved the environment",False,"center",style3)
+
+    new_stamp()
+    turtle.ontimer(move_snake,TIME_STEP)
+
+    remove_tail()
+move_snake()
+move_snake2()
+
+
+facts()
 turtle.mainloop()
+
+
+
+
+
+
